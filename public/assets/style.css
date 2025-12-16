@@ -1,0 +1,161 @@
+/* CSS minimal. À améliorer. */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #fff;
+}
+
+.muted {
+  color: #666;
+}
+
+/* --------------------
+   Titres & structure
+-------------------- */
+
+h1 {
+  margin-bottom: 24px;
+  font-size: 24px;
+  color: #333;
+}
+
+section {
+  margin-bottom: 24px;
+}
+
+/* --------------------
+   Filtre catégorie
+-------------------- */
+
+.filter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter label {
+  font-weight: bold;
+}
+
+.filter select {
+  padding: 6px 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* --------------------
+   Tableau contacts
+-------------------- */
+
+.contacts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+.contacts-table th,
+.contacts-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.contacts-table th {
+  background-color: #f0f2f4;
+  font-weight: bold;
+}
+
+.contacts-table tbody tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+.contacts-table tbody tr:hover {
+  background-color: #eef4ff;
+}
+
+/* --------------------
+   États & messages
+-------------------- */
+
+.no-result,
+.loading,
+.error {
+  padding: 16px;
+  text-align: center;
+  font-style: italic;
+}
+
+.loading {
+  color: #555;
+}
+
+.error {
+  color: #b00020;
+}
+
+/* --------------------
+   Liens
+-------------------- */
+
+a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.pagination {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.pagination button {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.pagination button:hover {
+  background: #eee;
+}
+
+
+/* --------------------
+   Responsive
+-------------------- */
+
+@media (max-width: 600px) {
+  .filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contacts-table th,
+  .contacts-table td {
+    font-size: 13px;
+    padding: 8px;
+  }
+}
