@@ -18,7 +18,7 @@ class ContactRepository
     }
 
     /**
-     * Récupère tous les contacts, triés par nom puis prénom
+     * Récupère tous les contacts triés par nom
      */
     public function findAllOrdered(): array
     {
@@ -27,7 +27,6 @@ class ContactRepository
             ->from(Contact::class, 'c')
             ->leftJoin('c.categorie', 'cat')
             ->orderBy('c.nom', 'ASC')
-            ->addOrderBy('c.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -44,43 +43,13 @@ class ContactRepository
             ->where('cat.id = :categorieId')
             ->setParameter('categorieId', $categorieId)
             ->orderBy('c.nom', 'ASC')
-            ->addOrderBy('c.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    public function search(
-        ?int $categorieId,
-        ?string $search,
-        string $sort = 'ASC'
-    ): array {
-        $qb = $this->em->createQueryBuilder()
-            ->select('c', 'cat')
-            ->from(Contact::class, 'c')
-            ->leftJoin('c.categorie', 'cat');
-
-        if ($categorieId !== null) {
-            $qb->andWhere('cat.id = :cat')
-                ->setParameter('cat', $categorieId);
-        }
-
-        if ($search !== null) {
-            $qb->andWhere(
-                'c.nom LIKE :term OR c.prenom LIKE :term OR c.email LIKE :term'
-            )
-                ->setParameter('term', '%' . $search . '%');
-        }
-
-        // Sécurisation du tri
-        $direction = strtoupper($sort) === 'DESC' ? 'DESC' : 'ASC';
-
-        return $qb
-            ->orderBy('c.nom', $direction)
-            ->addOrderBy('c.prenom', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
+    /**
+     * Récupère les contacts répondant au critère de recherche et les affiche par page si nécessaire
+     */
     public function searchPaginated(
         ?int $categorieId,
         ?string $search,
@@ -105,19 +74,16 @@ class ContactRepository
                 ->setParameter('term', '%' . $search . '%');
         }
 
-        // Clone pour le COUNT
         $countQb = clone $qb;
         $total = (int) $countQb
             ->select('COUNT(c.id)')
             ->getQuery()
             ->getSingleScalarResult();
 
-        // Sécurisation du tri
         $direction = strtoupper($sort) === 'DESC' ? 'DESC' : 'ASC';
 
         $data = $qb
             ->orderBy('c.nom', $direction)
-            ->addOrderBy('c.prenom', 'ASC')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery()

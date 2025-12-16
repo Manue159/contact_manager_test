@@ -17,7 +17,7 @@ class CategorieRepository
     }
 
     /**
-     * Récupère toutes les catégories triées par nom
+     * Récupère toutes les catégories triées par libelle
      */
     public function findAll(): array
     {

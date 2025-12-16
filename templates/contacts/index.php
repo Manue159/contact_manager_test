@@ -13,35 +13,38 @@
 <body>
 
     <main class="container">
-        <h1>Gestion des contacts</h1>
 
-        <section class="filter">
+        <h1 class="page-title">Gestion des contacts</h1>
 
-            <!-- Trier par ordre alphabétique -->
-            <label for="sort">Trier par :</label>
-            <select id="sort" name="sort">
-                <option value="asc">Nom A → Z</option>
-                <option value="desc">Nom Z → A</option>
-            </select>
+        <section class="filters">
+            <div class="filters-inner">
+                <!-- Trier par ordre alphabétique -->
+                <label for="sort">Trier par :</label>
+                <select id="sort" name="sort">
+                    <option value="asc">Nom A → Z</option>
+                    <option value="desc">Nom Z → A</option>
+                </select>
 
-            <!-- Rechercher par nom, prenom ou email -->
-            <label for="search">Rechercher :</label>
-            <input
-                type="text"
-                id="search"
-                name="search"
-                placeholder="Nom, prénom ou email">
-
-            <!-- Filtre par catégorie -->
-            <label for="categorie">Filtrer par catégorie :</label>
-            <select id="categorie" name="categorie">
-                <option value="">Toutes les catégories</option>
-                <?php foreach ($categories as $categorie): ?>
-                    <option value="<?= htmlspecialchars($categorie->getId()) ?>">
-                        <?= htmlspecialchars($categorie->getLibelle()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+                <!-- Rechercher par nom, prenom ou email -->
+                <label for="search">Rechercher :</label>
+                <input
+                    type="text"
+                    id="search"
+                    name="search"
+                    placeholder="Nom, prénom ou email"
+                >
+            
+                <!-- Filtre par catégorie -->
+                <label for="categorie">Filtrer par catégorie :</label>
+                <select id="categorie" name="categorie">
+                    <option value="">Toutes les catégories</option>
+                    <?php foreach ($categories as $categorie): ?>
+                        <option value="<?= htmlspecialchars($categorie->getId()) ?>">
+                            <?= htmlspecialchars($categorie->getLibelle()) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
         </section>
 
         <!-- Liste des contacts -->

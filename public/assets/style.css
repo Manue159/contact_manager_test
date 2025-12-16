@@ -24,65 +24,81 @@ body {
    Titres & structure
 -------------------- */
 
-h1 {
-  margin-bottom: 24px;
-  font-size: 24px;
-  color: #333;
-}
-
 section {
   margin-bottom: 24px;
+}
+
+.page-title {
+  text-align: center;
+  padding: 16px;
+  margin-bottom: 24px;
+  background: #435d7d;
+  color: #fff;
+  font-size: 22px;
+  letter-spacing: 0.5px;
 }
 
 /* --------------------
    Filtre catégorie
 -------------------- */
 
-.filter {
+.filters {
   display: flex;
-  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filters-inner {
+  display: flex;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
-.filter label {
-  font-weight: bold;
-}
-
-.filter select {
-  padding: 6px 10px;
-  font-size: 14px;
+.filters-inner select,
+.filters-inner input {
+  padding: 8px 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  min-width: 180px;
 }
 
 /* --------------------
    Tableau contacts
 -------------------- */
 
-.contacts-table {
+.table-wrapper {
+  max-height: 420px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+}
+
+.contact-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 12px;
 }
 
-.contacts-table th,
-.contacts-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
+.contact-table thead th {
+  position: sticky;
+  top: 0;
+  background: #435d7d;
+  color: #fff;
+  padding: 12px;
   text-align: left;
+  font-weight: normal;
+  z-index: 2;
 }
 
-.contacts-table th {
-  background-color: #f0f2f4;
-  font-weight: bold;
+.contact-table tbody td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
 }
 
-.contacts-table tbody tr:nth-child(even) {
-  background-color: #fafafa;
+.contact-table tbody tr:nth-child(even) {
+  background: #f9f9f9;
 }
 
-.contacts-table tbody tr:hover {
-  background-color: #eef4ff;
+.contact-table tbody tr:hover {
+  background: #eef3f9;
 }
 
 /* --------------------
@@ -110,7 +126,7 @@ section {
 -------------------- */
 
 a {
-  color: #1a73e8;
+  color: #435d7d;
   text-decoration: none;
 }
 
@@ -133,9 +149,9 @@ a:hover {
 }
 
 .pagination button.active {
-  background: #007bff;
+  background: #435d7d;
   color: #fff;
-  border-color: #007bff;
+  border-color: #435d7d;
 }
 
 .pagination button:hover {
@@ -148,14 +164,35 @@ a:hover {
 -------------------- */
 
 @media (max-width: 600px) {
-  .filter {
+  .filters-inner {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
   }
 
-  .contacts-table th,
-  .contacts-table td {
-    font-size: 13px;
+  .filters-inner select,
+  .filters-inner input {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .contact-table thead {
+    display: none;
+  }
+
+  .contact-table tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid black;
+  }
+
+  .contact-table td {
+    display: flex;
+    justify-content: space-between;
     padding: 8px;
+  }
+
+  .contact-table td::before {
+    content: attr(data-label);
+    font-weight: bold;
   }
 }

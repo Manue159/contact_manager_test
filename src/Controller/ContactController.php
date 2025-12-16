@@ -49,7 +49,7 @@ class ContactController
         $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
         $page = ($page && $page > 0) ? $page : 1;
 
-        $limit = 10;
+        $limit = 8;
         $offset = ($page - 1) * $limit;
 
         $result = $this->contactRepository->searchPaginated(
