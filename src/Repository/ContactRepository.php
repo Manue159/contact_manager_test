@@ -18,37 +18,7 @@ class ContactRepository
     }
 
     /**
-     * Récupère tous les contacts triés par nom
-     */
-    public function findAllOrdered(): array
-    {
-        return $this->em->createQueryBuilder()
-            ->select('c', 'cat')
-            ->from(Contact::class, 'c')
-            ->leftJoin('c.categorie', 'cat')
-            ->orderBy('c.nom', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * Récupère les contacts d’une catégorie donnée
-     */
-    public function findByCategorie(int $categorieId): array
-    {
-        return $this->em->createQueryBuilder()
-            ->select('c', 'cat')
-            ->from(Contact::class, 'c')
-            ->leftJoin('c.categorie', 'cat')
-            ->where('cat.id = :categorieId')
-            ->setParameter('categorieId', $categorieId)
-            ->orderBy('c.nom', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * Récupère les contacts répondant au critère de recherche et les affiche par page si nécessaire
+     * Récupère les contacts répondant au critère de recherche, de tri et de filtre
      */
     public function searchPaginated(
         ?int $categorieId,

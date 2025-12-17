@@ -11,35 +11,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //chargement des contacts selon la demande: filtre sur catégorie, tri ou recherche
     function loadContacts(customParams = null) {
-        const params = customParams || new URLSearchParams();
+        const params = new URLSearchParams();
 
-        //attribution des parameètres si une recherche, un tri ou un filtre est demandé
-        if (!customParams) {
-            //filtre par catégorie
-            if (selectCategorie && selectCategorie.value) {
-                params.set('categorie', selectCategorie.value);
-            }
+        // Filtre catégorie
+        if (selectCategorie && selectCategorie.value) {
+            params.set('categorie', selectCategorie.value);
+        }
 
-            //recherche texte
-            if (searchInput && searchInput.value.trim() !== '') {
-                params.set('search', searchInput.value.trim());
-            }
+        // Recherche
+        if (searchInput && searchInput.value.trim() !== '') {
+            params.set('search', searchInput.value.trim());
+        }
 
-            //tri par ordre alphabétique
-            if (sortSelect && sortSelect.value) {
-                params.set('sort', sortSelect.value);
-            }
+        // Tri
+        if (sortSelect && sortSelect.value) {
+            params.set('sort', sortSelect.value);
+        }
 
-            //retour à la première page en cas de changement
+        // Pagination
+        if (customParams instanceof URLSearchParams && customParams.get('page')) {
+            params.set('page', customParams.get('page'));
+        } else {
             params.set('page', 1);
         }
 
         window.lastParams = params.toString();
 
-        //loader au chargement
         contactList.innerHTML = '<p class="loading">Chargement...</p>';
 
-        //appel AJAX
         fetch('/contacts/list?' + params.toString())
             .then(r => r.text())
             .then(html => contactList.innerHTML = html);
@@ -78,5 +77,5 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //Chargement initial de la liste au chargement de la page
-    loadContacts(1);
+    loadContacts();
 });

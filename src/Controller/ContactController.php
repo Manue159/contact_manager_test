@@ -24,9 +24,6 @@ class ContactController
         // Récupération de toutes les catégories
         $categories = $this->categorieRepository->findAll();
 
-        // Récupération de tous les contacts (sans filtre)
-        $contacts = $this->contactRepository->findAllOrdered();
-
         // Inclusion du template principal
         require __DIR__ . '/../../templates/contacts/index.php';
     }
