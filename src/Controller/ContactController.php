@@ -36,22 +36,27 @@ class ContactController
      */
     public function list(): void
     {
+        // Filtre par catégorie
         $categorieId = filter_input(INPUT_GET, 'categorie', FILTER_VALIDATE_INT);
         $categorieId = $categorieId !== false ? $categorieId : null;
 
+        // Recherche texte
         $search = filter_input(INPUT_GET, 'search');
         $search = is_string($search) ? trim($search) : null;
         $search = $search !== '' ? $search : null;
 
+        // Tri
         $sort = filter_input(INPUT_GET, 'sort');
         $sort = $sort === 'desc' ? 'DESC' : 'ASC';
 
         $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
         $page = ($page && $page > 0) ? $page : 1;
 
+        //nombre d'éléments maximum par page
         $limit = 8;
         $offset = ($page - 1) * $limit;
 
+        //appel au repository
         $result = $this->contactRepository->searchPaginated(
             $categorieId,
             $search,
@@ -60,6 +65,7 @@ class ContactController
             $offset
         );
 
+        //données envoyées à la vue
         $contacts = $result['data'];
 
         $total = $result['total'];
